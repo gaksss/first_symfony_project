@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!
+{% endblock %}
+
+{% block body %}
+
+
+	{% for recipe in recipes %}
+
+
+		<article>
+			<form action="post">
+				<a href="{{ path('app_description', {id: recipe.getId}) }}">
+					<h2>{{recipe.name}}</h2>
+				</a>
+			</form>
+		</article>
+
+	{% endfor %}
+{% endblock %}
