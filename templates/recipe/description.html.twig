@@ -10,9 +10,13 @@
 
 		<h3>{{recipe.name}}</h3>
 
-		<p>{{recipe.description}}</p>
+		{# <p>{{recipe.description}}</p> #}
 
 		<a href="{{path('app_recipe_delete', {id: recipe.getId})}}">Supprimer</a>
+		<a href="{{path('app_recipe_update', {id: recipe.getId})}}">Modifier</a>
+		<h3>Catégorie:
+			{{ recipe.category }}</h3>
+
 	</article>
 
 {% endblock %}

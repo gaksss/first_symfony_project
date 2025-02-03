@@ -21,11 +21,15 @@ class Recipe
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    // #[ORM\Column(type: Types::TEXT)]
+    // private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
 
 
@@ -63,17 +67,17 @@ class Recipe
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
+    // public function getDescription(): ?string
+    // {
+    //     return $this->description;
+    // }
 
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
+    // public function setDescription(string $description): static
+    // {
+    //     $this->description = $description;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getSlug(): ?string
     {
@@ -83,6 +87,18 @@ class Recipe
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

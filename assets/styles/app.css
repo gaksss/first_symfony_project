@@ -1,1 +1,13 @@
+body {
+  /* background-image: url(../img/PAF.png); */
+}
 
+.form-control {
+  background-color: #f8f9fa;
+  border: 1px solid red;
+}
+
+.test {
+  display: flex;
+  flex-direction: column;
+}

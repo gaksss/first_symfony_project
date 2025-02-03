@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!
+{% endblock %}
+
+
+{% block body %}
+
+	<p class="red">Test</p>
+	<img src="{{ asset('img/PAF.png')}}" alt="">
+	<section>
+		{{ form_start(recipeForm, {
+			'attr':{
+				'id': 'recipeForm',
+				'class': 'form-horizontal'
+			}
+		}) }}
+
+		<div class="test">
+			{{ form_label(recipeForm.name) }}
+			{{ form_widget(recipeForm.name) }}
+		</div>
+
+		<div>
+			{{ form_label(recipeForm.slug) }}
+			{{ form_widget(recipeForm.slug) }}
+		</div>
+
+		<div>
+			{{ form_label(recipeForm.category) }}
+			{{ form_widget(recipeForm.category) }}
+		</div>
+
+		{{ form_end(recipeForm) }}
+	</section>
+
+{% endblock %}
