@@ -6,6 +6,8 @@ use App\Repository\RecipeRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
@@ -16,6 +18,9 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'The name cannot be blank.')]
+    #[Assert\NotNull(message: 'The name cannot be null.')]
+    #[Assert\Length(min: 5, max: 150)]
     private ?string $name = null;
 
     #[ORM\Column]
@@ -24,8 +29,7 @@ class Recipe
     // #[ORM\Column(type: Types::TEXT)]
     // private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $slug = null;
+    
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
@@ -79,17 +83,8 @@ class Recipe
     //     return $this;
     // }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
 
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
+   
 
     public function getCategory(): ?Category
     {

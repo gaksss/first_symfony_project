@@ -5,20 +5,23 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
 
-        if($this->getUser()){
+        if ($this->getUser()) {
             return $this->redirectToRoute('app_recipe');
         }
 
@@ -37,6 +40,18 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // do anything else you need here, like send an email
+
+            $email = (new TemplatedEmail())
+                ->from('support@demo.com')
+                ->to($user->getEmail())
+                ->subject('Welcome aboard! ')
+                ->htmlTemplate('emails/welcome.html.twig')
+                ->context([
+                    'data' => $user,
+                ]);
+
+            $mailer->send($email);
+
 
             return $security->login($user, 'form_login', 'main');
         }
